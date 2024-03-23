@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+    <style>
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+        .container {
+            background-color: gray;
+            width: 100vw;
+            height: 100vh;
+        }
+        #i {
+            width: 800px;
+            height: 400px;
+            margin: 10px;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="i">
+        </canvas>
+        <button onclick="onClick()">change rect</button>
+    </div>
+    <script type="text/javascript" src="canvas-scripts/point.js"></script>
+    <script type="text/javascript" src="canvas-scripts/line.js"></script>
+    <script type="text/javascript" src="canvas-scripts/rect.js"></script>
+    <script>
+        var width = 40;
+        var height = 50;
+        var rect = new Rect(new Point(30,30), width, height);
+        var wi =  rect.w/10;
+        var hi =  rect.h/10;
+        function enableCanvas() {
+            console.log('enable canvas');
+            var canvasElement = document.getElementById('i');
+            var ctx = canvasElement.getContext('2d');
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            var line = new Line(new Point(0,0),new Point(300,150)).draw(ctx);
+            var line = new Line(new Point(0,150),new Point(300,0)).draw(ctx);
+            rect.draw(ctx);
+            // var rect = new Rect2(new Point(50,50), new Point(80,100)).draw(ctx);
+            requestAnimationFrame(enableCanvas);
+
+            if (rect.h < 0 || 100 < rect.h) {
+                wi = wi *-1;
+                hi = hi *-1;
+            }
+            rect.w = rect.w+wi*0.2;
+            rect.h = rect.h+hi*0.2;
+        }
+        enableCanvas();
+
+        function onClick() {
+            width = width + 100;
+            height = height + 100;
+        }
+
+    </script>
+</body>
+</html>
